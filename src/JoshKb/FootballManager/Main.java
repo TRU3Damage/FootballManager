@@ -6,7 +6,7 @@ import javax.swing.*;
 
 public class Main {
 
-    public static void NewVisuals(){
+    public static void NewVisuals() {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {

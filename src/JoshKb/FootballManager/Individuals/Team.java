@@ -5,8 +5,7 @@ import java.util.ArrayList;
 
 public class Team implements Serializable {
 
-    ArrayList<Player> Players = new ArrayList<>();
-    ArrayList<Staff> Staff = new ArrayList<>();
+    public ArrayList<Role> Roles = new ArrayList<>();
 
     private String Name;
 
@@ -14,20 +13,12 @@ public class Team implements Serializable {
         Name = name;
     }
 
-    public ArrayList<Player> getPlayers() {
-        return Players;
+    public ArrayList<Role> getRoles() {
+        return Roles;
     }
 
-    public void setPlayers(ArrayList<Player> players) {
-        Players = players;
-    }
-
-    public ArrayList<JoshKb.FootballManager.Individuals.Staff> getStaff() {
-        return Staff;
-    }
-
-    public void setStaff(ArrayList<JoshKb.FootballManager.Individuals.Staff> staff) {
-        Staff = staff;
+    public void setRoles(ArrayList<Role> roles) {
+        Roles = roles;
     }
 
     public String getName() {
@@ -37,5 +28,9 @@ public class Team implements Serializable {
     @Override
     public String toString() {
         return Name;
+    }
+
+    public void addRole(Role role){
+
     }
 }

@@ -1,5 +1,6 @@
 package JoshKb.FootballManager.UI;
 
+import JoshKb.FootballManager.Individuals.Role;
 import JoshKb.FootballManager.Individuals.Team;
 
 import javax.swing.*;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 public class TeamInformation {
 
     private JComboBox<Team> teamComboBox;
-    private JComboBox<?> roleBox; //TODO change ? for appropriate class when implemented
+    private JComboBox<Role> roleBox; //TODO change ? for appropriate class when implemented
     private JButton searchButton;
     private JComboBox<?> personBox;//TODO change ? for appropriate class when implemented
     private JButton addTeamButton;
@@ -18,14 +19,15 @@ public class TeamInformation {
     private JButton deletePersonButton;
     private JButton addRoleButton;
     private JButton deleteRoleButton;
+    private ArrayList<Team> Teams;
     private JPanel TIPanel;
 
     public TeamInformation() {
         File f = new File("teams.txt");
         if (f.exists()) {
-            ArrayList<Team> t = ReadFromFile(f);
+            Teams = ReadFromFile(f);
             for (Team team :
-                    t) {
+                    Teams) {
                 teamComboBox.addItem(team);
             }
         }
@@ -38,15 +40,23 @@ public class TeamInformation {
             teamComboBox.removeItemAt(teamComboBox.getSelectedIndex());
             WriteToFile(getTeamBoxItems(teamComboBox));
         });
-        deleteRoleButton.addActionListener(e -> roleBox.removeItemAt(roleBox.getSelectedIndex()));
-        deletePersonButton.addActionListener(e -> personBox.removeItemAt(personBox.getSelectedIndex()));
-        searchButton.addActionListener(e -> search());
         addRoleButton.addActionListener(e -> {
-            //TODO implement
+            int index = teamComboBox.getSelectedIndex();
+            Teams.get(index).addRole();
+
+            roleBox.addItem(new Role(JOptionPane.showInputDialog("Enter role")));
+            WriteToFile(getTeamBoxItems(teamComboBox));
+        });
+        deleteRoleButton.addActionListener(e -> {
+            roleBox.removeItemAt(roleBox.getSelectedIndex());
+            //WriteToFile(getRoleBoxItems(roleBox));
         });
         addPersonButton.addActionListener(e -> {
             //TODO implement
         });
+        deletePersonButton.addActionListener(e -> personBox.removeItemAt(personBox.getSelectedIndex()));
+        searchButton.addActionListener(e -> search());
+
     }
 
     public static void WriteToFile(ArrayList<Team> T) {

@@ -1,5 +1,6 @@
 package JoshKb.FootballManager.UI;
 
+import JoshKb.FootballManager.Individuals.Player;
 import JoshKb.FootballManager.Individuals.Role;
 import JoshKb.FootballManager.Individuals.Team;
 
@@ -10,16 +11,15 @@ import java.util.ArrayList;
 public class TeamInformation {
 
     private JComboBox<Team> teamComboBox;
-    private JComboBox<Role> roleBox; //TODO change ? for appropriate class when implemented
+    private JComboBox<Role> roleBox;
     private JButton searchButton;
     private JComboBox<?> personBox;//TODO change ? for appropriate class when implemented
     private JButton addTeamButton;
     private JButton deleteTeamButton;
     private JButton addPersonButton;
     private JButton deletePersonButton;
-    private JButton addRoleButton;
-    private JButton deleteRoleButton;
     private ArrayList<Team> Teams;
+    private ArrayList<Player> Players;
     private JPanel TIPanel;
 
     public TeamInformation() {
@@ -31,7 +31,6 @@ public class TeamInformation {
                 teamComboBox.addItem(team);
             }
         }
-
         addTeamButton.addActionListener(e -> {
             teamComboBox.addItem(new Team(JOptionPane.showInputDialog("Enter team name")));
             WriteToFile(getTeamBoxItems(teamComboBox));
@@ -40,22 +39,18 @@ public class TeamInformation {
             teamComboBox.removeItemAt(teamComboBox.getSelectedIndex());
             WriteToFile(getTeamBoxItems(teamComboBox));
         });
-        addRoleButton.addActionListener(e -> {
-            int index = teamComboBox.getSelectedIndex();
-            Teams.get(index).addRole();
-
-            roleBox.addItem(new Role(JOptionPane.showInputDialog("Enter role")));
-            WriteToFile(getTeamBoxItems(teamComboBox));
-        });
-        deleteRoleButton.addActionListener(e -> {
-            roleBox.removeItemAt(roleBox.getSelectedIndex());
-            //WriteToFile(getRoleBoxItems(roleBox));
-        });
         addPersonButton.addActionListener(e -> {
-            //TODO implement
+            addPerson();
         });
         deletePersonButton.addActionListener(e -> personBox.removeItemAt(personBox.getSelectedIndex()));
         searchButton.addActionListener(e -> search());
+
+        Role player = new Role("Player");
+        Role staff = new Role("Staff");
+        Role referee = new Role("Referee");
+        roleBox.addItem(player);
+        roleBox.addItem(staff);
+        roleBox.addItem(referee);
 
     }
 
@@ -99,8 +94,22 @@ public class TeamInformation {
         for (int i = 0; i < jComboBox.getItemCount(); i++) {
             arrayList.add(jComboBox.getItemAt(i));
         }
-
         return arrayList;
+    }
+
+    public void addPerson(){
+        switch (roleBox.getItemAt(roleBox.getSelectedIndex()).getName()) {
+            case "Player":
+                PlayerInfoWindow PIWindow = new PlayerInfoWindow();
+                PIWindow.run();
+                break;
+            case "Staff":
+                System.out.println("1");
+                break;
+            default:
+                System.out.println("3");
+                break;
+        }
     }
 
     public void search() {

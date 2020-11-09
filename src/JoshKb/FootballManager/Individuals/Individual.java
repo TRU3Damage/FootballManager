@@ -8,6 +8,6 @@ public abstract class Individual {
 
     public String EmploymentStatus;
 
-    public Integer Pay;
+    public String Pay;
 
 }

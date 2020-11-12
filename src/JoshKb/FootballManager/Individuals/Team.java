@@ -5,7 +5,11 @@ import java.util.ArrayList;
 
 public class Team implements Serializable {
 
-    public ArrayList<Role> Roles = new ArrayList<>();
+    public ArrayList<Player> players = new ArrayList<>();
+    public ArrayList<Referees> referees= new ArrayList<>();
+    public ArrayList<Staff> staff = new ArrayList<>();
+
+    private static final long serialVersionUID = 1234567L;
 
     private String Name;
 
@@ -13,12 +17,28 @@ public class Team implements Serializable {
         Name = name;
     }
 
-    public ArrayList<Role> getRoles() {
-        return Roles;
+    public ArrayList<Player> getPlayers() {
+        return players;
     }
 
-    public void setRoles(ArrayList<Role> roles) {
-        Roles = roles;
+    public void setPlayers(ArrayList<Player> Players) {
+        players = Players;
+    }
+
+    public ArrayList<Referees> getReferees() {
+        return referees;
+    }
+
+    public void setReferees(ArrayList<Referees> Referees) {
+        referees = Referees;
+    }
+
+    public ArrayList<Staff> getStaff() {
+        return staff;
+    }
+
+    public void setStaff(ArrayList<Staff> Staff) {
+        staff = Staff;
     }
 
     public String getName() {
@@ -30,7 +50,4 @@ public class Team implements Serializable {
         return Name;
     }
 
-    public void addRole(Role role){
-
-    }
 }

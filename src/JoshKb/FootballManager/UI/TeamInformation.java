@@ -100,8 +100,7 @@ public class TeamInformation {
     public void addPerson(){
         switch (roleBox.getItemAt(roleBox.getSelectedIndex()).getName()) {
             case "Player":
-                PlayerInfoWindow PIWindow = new PlayerInfoWindow();
-                PIWindow.run();
+                addPlayer();
                 break;
             case "Staff":
                 System.out.println("1");
@@ -110,6 +109,15 @@ public class TeamInformation {
                 System.out.println("3");
                 break;
         }
+    }
+
+    public void addPlayer(){
+        PlayerInfoWindow PIWindow = new PlayerInfoWindow();
+        PIWindow.run();
+
+//        while (PIWindow.DoneButtonPressed == false){
+//            continue;
+//        }
     }
 
     public void search() {

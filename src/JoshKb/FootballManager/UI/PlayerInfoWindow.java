@@ -1,8 +1,10 @@
 package JoshKb.FootballManager.UI;
 
 import JoshKb.FootballManager.Individuals.Player;
+import JoshKb.FootballManager.Individuals.Team;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
 public class PlayerInfoWindow {
     private JComboBox PositionBox;
@@ -14,8 +16,9 @@ public class PlayerInfoWindow {
     private Player player;
     private JFrame frame = new JFrame("PlayerInformationWindow");
 
-    public void run() {
+    public boolean DoneButtonPressed = false;
 
+    public void run() {
         frame.setContentPane(new PlayerInfoWindow().PIPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
@@ -23,6 +26,7 @@ public class PlayerInfoWindow {
     }
 
     public PlayerInfoWindow(){
+
         PositionBox.addItem("GK");
         PositionBox.addItem("DF");
         PositionBox.addItem("MF");
@@ -34,6 +38,7 @@ public class PlayerInfoWindow {
         doneButton.addActionListener(e -> {
             player = new Player(NameBox.getText(), PositionBox.getItemAt(PositionBox.getSelectedIndex()).toString(), EmploymentBox.getItemAt(EmploymentBox.getSelectedIndex()).toString(), PayBox.getText());
             frame.setVisible(false);
+            DoneButtonPressed = true;
 
         });
     }

@@ -43,6 +43,10 @@ public class PlayerInfoWindow {
         });
     }
 
+    public boolean isDoneButtonPressed() {
+        return DoneButtonPressed;
+    }
+
     public Player returnPlayer(){
         return player;
     }

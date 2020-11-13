@@ -3,6 +3,7 @@ package JoshKb.FootballManager.UI;
 import JoshKb.FootballManager.Individuals.Player;
 import JoshKb.FootballManager.Individuals.Role;
 import JoshKb.FootballManager.Individuals.Team;
+import JoshKb.FootballManager.UI.prefabs.PlayerInfoDialogPanel;
 
 import javax.swing.*;
 import java.io.*;
@@ -112,12 +113,9 @@ public class TeamInformation {
     }
 
     public void addPlayer(){
-        PlayerInfoWindow PIWindow = new PlayerInfoWindow();
-        PIWindow.run();
-
-//        while (PIWindow.DoneButtonPressed == false){
-//            continue;
-//        }
+        Player p = PlayerInfoDialogPanel.createAndShowGui();
+        System.out.println(p);
+        System.out.println("Complete");
     }
 
     public void search() {

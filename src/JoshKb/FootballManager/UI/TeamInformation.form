@@ -14,12 +14,12 @@
         </constraints>
         <properties/>
       </component>
-      <component id="674c8" class="javax.swing.JButton" binding="searchButton" default-binding="true">
+      <component id="674c8" class="javax.swing.JButton" binding="searchButton">
         <constraints>
           <grid row="9" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Search"/>
+          <text value="search"/>
         </properties>
       </component>
       <component id="53e93" class="javax.swing.JComboBox" binding="personBox">

@@ -20,7 +20,7 @@ public class PlayerInfoWindow {
 
     public void run() {
         frame.setContentPane(new PlayerInfoWindow().PIPanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
     }

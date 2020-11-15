@@ -6,6 +6,8 @@ import JoshKb.FootballManager.Individuals.Team;
 import JoshKb.FootballManager.UI.prefabs.PlayerInfoDialogPanel;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.ArrayList;
 
@@ -14,7 +16,7 @@ public class TeamInformation {
     private JComboBox<Team> teamComboBox;
     private JComboBox<Role> roleBox;
     private JButton searchButton;
-    private JComboBox<?> personBox;//TODO change ? for appropriate class when implemented
+    private JComboBox<String> personBox;//TODO change ? for appropriate class when implemented
     private JButton addTeamButton;
     private JButton deleteTeamButton;
     private JButton addPersonButton;
@@ -34,7 +36,9 @@ public class TeamInformation {
         }
         addTeamButton.addActionListener(e -> {
             teamComboBox.addItem(new Team(JOptionPane.showInputDialog("Enter team name")));
+            //Teams.add(teamComboBox.getItemAt(teamComboBox.getItemCount()));
             WriteToFile(getTeamBoxItems(teamComboBox));
+            Teams = ReadFromFile(f);
         });
         deleteTeamButton.addActionListener(e -> {
             teamComboBox.removeItemAt(teamComboBox.getSelectedIndex());
@@ -45,6 +49,25 @@ public class TeamInformation {
         });
         deletePersonButton.addActionListener(e -> personBox.removeItemAt(personBox.getSelectedIndex()));
         searchButton.addActionListener(e -> search());
+        teamComboBox.addActionListener(e -> {
+            personBox.removeAllItems();
+            if (Teams != null && (roleBox.getItemAt(roleBox.getSelectedIndex()).getName().equals("Player"))){
+                System.out.println(Teams.get(teamComboBox.getSelectedIndex()).players.size());
+                for (int i = 0; i < Teams.get(teamComboBox.getSelectedIndex()).players.size(); i++)
+                {
+                    personBox.addItem(Teams.get(teamComboBox.getSelectedIndex()).getPlayer(i));
+                }
+            }
+        });
+        roleBox.addActionListener(e -> {
+            personBox.removeAllItems();
+            if (Teams != null && (roleBox.getItemAt(roleBox.getSelectedIndex()).getName().equals("Player"))){
+                for (int i = 0; i < Teams.get(teamComboBox.getSelectedIndex()).players.size(); i++)
+                {
+                    personBox.addItem(Teams.get(teamComboBox.getSelectedIndex()).getPlayer(i));
+                }
+            }
+        });
 
         Role player = new Role("Player");
         Role staff = new Role("Staff");
@@ -114,8 +137,9 @@ public class TeamInformation {
 
     public void addPlayer(){
         Player p = PlayerInfoDialogPanel.createAndShowGui();
-        System.out.println(p);
-        System.out.println("Complete");
+        Team t = teamComboBox.getItemAt(teamComboBox.getSelectedIndex());
+        t.setPlayers(p);
+        personBox.addItem(p.Name);
     }
 
     public void search() {

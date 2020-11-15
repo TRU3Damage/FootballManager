@@ -17,12 +17,12 @@ public class Team implements Serializable {
         Name = name;
     }
 
-    public ArrayList<Player> getPlayers() {
-        return players;
+    public String getPlayer(int i) {
+        return players.get(i).getName();
     }
 
-    public void setPlayers(ArrayList<Player> Players) {
-        players = Players;
+    public void setPlayers(Player Players) {
+        players.add(Players);
     }
 
     public ArrayList<Referees> getReferees() {

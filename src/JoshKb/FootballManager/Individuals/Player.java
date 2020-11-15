@@ -14,4 +14,8 @@ public class Player extends Individual{
 
     }
 
+    public String getName(){
+        return Name;
+    }
+
 }

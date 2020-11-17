@@ -18,4 +18,13 @@ public class Player extends Individual{
         return Name;
     }
 
+    public String getPosition(){
+        return Position;
+    }
+    public String getEmployment(){
+        return EmploymentStatus;
+    }
+    public String getPay(){
+        return Pay;
+    }
 }

@@ -21,6 +21,8 @@ public class TeamInformation {
     private JPanel TIPanel;
 
     public TeamInformation() {
+        //creates a new file
+        //or if file already exists reads the info from the file and adds it to the comboboxes
         File f = new File("teams.txt");
         if (f.exists()) {
             Teams = ReadFromFile(f);
@@ -29,6 +31,7 @@ public class TeamInformation {
                 teamComboBox.addItem(team);
             }
         }
+        //action listeners for button presses and option changes
         addTeamButton.addActionListener(e -> {
             teamComboBox.addItem(new Team(JOptionPane.showInputDialog("Enter team name")));
             WriteToFile(getTeamBoxItems(teamComboBox));
@@ -44,6 +47,9 @@ public class TeamInformation {
         deletePersonButton.addActionListener(e -> personBox.removeItemAt(personBox.getSelectedIndex()));
         searchButton.addActionListener(e -> search());
         teamComboBox.addActionListener(e -> {
+
+            //Changing the contents of the person box depending on which team and role is selected
+
             personBox.removeAllItems();
             if (Teams != null && (roleBox.getItemAt(roleBox.getSelectedIndex()).getName().equals("Player"))){
                 System.out.println(Teams.get(teamComboBox.getSelectedIndex()).players.size());
@@ -68,6 +74,9 @@ public class TeamInformation {
             }
         });
         roleBox.addActionListener(e -> {
+
+            //Changing the contents of the person box depending on which team and role is selected
+
             personBox.removeAllItems();
             if (Teams != null && (roleBox.getItemAt(roleBox.getSelectedIndex()).getName().equals("Player"))){
                 for (int i = 0; i < Teams.get(teamComboBox.getSelectedIndex()).players.size(); i++)
@@ -91,6 +100,7 @@ public class TeamInformation {
             }
         });
 
+        //making of the 3 roles as other roles don't need to be added
         Role player = new Role("Player");
         Role staff = new Role("Staff");
         Role referee = new Role("Referee");
@@ -100,6 +110,7 @@ public class TeamInformation {
 
     }
 
+    //write to file method
     public static void WriteToFile(ArrayList<Team> T) {
         try {
             FileOutputStream FOutputStream = new FileOutputStream(new File("teams.txt"));
@@ -127,6 +138,7 @@ public class TeamInformation {
         return T1;
     }
 
+    // creation of the Jframe
     public void run() {
         JFrame frame = new JFrame("TeamInformation");
         frame.setContentPane(new TeamInformation().TIPanel);
@@ -135,6 +147,7 @@ public class TeamInformation {
         frame.setVisible(true);
     }
 
+    //returns an arraylist of items in the Teambox
     public ArrayList<Team> getTeamBoxItems(JComboBox<Team> jComboBox) {
         ArrayList<Team> arrayList = new ArrayList<>();
         for (int i = 0; i < jComboBox.getItemCount(); i++) {
@@ -143,6 +156,7 @@ public class TeamInformation {
         return arrayList;
     }
 
+    //switch cases to add people to each role selected
     public void addPerson(){
         switch (roleBox.getItemAt(roleBox.getSelectedIndex()).getName()) {
             case "Player":
@@ -158,6 +172,7 @@ public class TeamInformation {
     }
 
     public void addPlayer(){
+        //runs the infodialogpanel and saves the player name to the person box
         Player p = PlayerInfoDialogPanel.createAndShowGui();
         Team t = teamComboBox.getItemAt(teamComboBox.getSelectedIndex());
         t.setPlayers(p);
@@ -165,6 +180,7 @@ public class TeamInformation {
     }
 
     public void addStaff(){
+        //runs the infodialogpanel and saves the staff name to the person box
         Staff s = PlayerInfoDialogPanel.createAndShowGuiStaff();
         Team t = teamComboBox.getItemAt(teamComboBox.getSelectedIndex());
         t.setStaff(s);
@@ -172,6 +188,7 @@ public class TeamInformation {
     }
 
     public void addReferee(){
+        //runs the infodialogpanel and saves the ref name to the person box
         Referees r = PlayerInfoDialogPanel.createAndShowGuiReferee();
         Team t = teamComboBox.getItemAt(teamComboBox.getSelectedIndex());
         t.setReferees(r);
@@ -179,6 +196,19 @@ public class TeamInformation {
     }
 
     public void search() {
-
+        //getting the player information based on which player is currently selected in the personBox
+        String pName = personBox.getItemAt(personBox.getSelectedIndex());
+        ArrayList<Player> players = Teams.get(teamComboBox.getSelectedIndex()).players;
+        String pPosition, pEmploymentStatus, pPay;
+        for (Player player :
+                players) {
+            if (player.Name == pName){
+                pPosition = player.Position;
+                pPay = player.Pay;
+                pEmploymentStatus = player.EmploymentStatus;
+                InfoBox IBWindow = new InfoBox(pName, pPay, pPosition, pEmploymentStatus);
+                IBWindow.run();
+            }
+        }
     }
 }

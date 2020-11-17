@@ -50,4 +50,8 @@ public class Team implements Serializable {
         return Name;
     }
 
+    public ArrayList<Player> getPlayerList(){
+        return players;
+    }
+
 }

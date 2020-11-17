@@ -25,20 +25,20 @@ public class Team implements Serializable {
         players.add(Players);
     }
 
-    public ArrayList<Referees> getReferees() {
-        return referees;
+    public String getStaff(int i) {
+        return staff.get(i).getName();
     }
 
-    public void setReferees(ArrayList<Referees> Referees) {
-        referees = Referees;
+    public void setStaff(Staff Staff) {
+        staff.add(Staff);
     }
 
-    public ArrayList<Staff> getStaff() {
-        return staff;
+    public String getReferees(int i) {
+        return referees.get(i).getName();
     }
 
-    public void setStaff(ArrayList<Staff> Staff) {
-        staff = Staff;
+    public void setReferees(Referees Referees) {
+        referees.add(Referees);
     }
 
     public String getName() {

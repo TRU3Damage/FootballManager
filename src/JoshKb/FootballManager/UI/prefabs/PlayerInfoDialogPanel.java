@@ -1,6 +1,8 @@
 package JoshKb.FootballManager.UI.prefabs;
 
 import JoshKb.FootballManager.Individuals.Player;
+import JoshKb.FootballManager.Individuals.Referees;
+import JoshKb.FootballManager.Individuals.Staff;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -76,4 +78,43 @@ public class PlayerInfoDialogPanel extends JPanel {
         }
         return null;
     }
+
+    public static Staff createAndShowGuiStaff() {
+        PlayerInfoDialogPanel mainPanel = new PlayerInfoDialogPanel();
+
+        int optionType = JOptionPane.DEFAULT_OPTION;
+        int messageType = JOptionPane.PLAIN_MESSAGE;
+        String[] options = { "Submit", "Cancel" };
+        Object initialValue = options[0];
+        int reply = JOptionPane.showOptionDialog(null, mainPanel, // this is where the window is shown
+                "Get User Information", optionType, messageType, null, options,
+                initialValue);
+        if (reply == 0) {
+            // When submit clicked:
+
+            return new Staff(mainPanel.labelFieldMap.get(LABEL_TEXTS[1]).getText() + mainPanel.labelFieldMap.get(LABEL_TEXTS[0]).getText(),
+                    mainPanel.labelFieldMap.get(LABEL_TEXTS[2]).getText(), mainPanel.labelFieldMap.get(LABEL_TEXTS[3]).getText(), mainPanel.labelFieldMap.get(LABEL_TEXTS[4]).getText());
+        }
+        return null;
+    }
+
+    public static Referees createAndShowGuiReferee() {
+        PlayerInfoDialogPanel mainPanel = new PlayerInfoDialogPanel();
+
+        int optionType = JOptionPane.DEFAULT_OPTION;
+        int messageType = JOptionPane.PLAIN_MESSAGE;
+        String[] options = { "Submit", "Cancel" };
+        Object initialValue = options[0];
+        int reply = JOptionPane.showOptionDialog(null, mainPanel, // this is where the window is shown
+                "Get User Information", optionType, messageType, null, options,
+                initialValue);
+        if (reply == 0) {
+            // When submit clicked:
+
+            return new Referees(mainPanel.labelFieldMap.get(LABEL_TEXTS[1]).getText() + mainPanel.labelFieldMap.get(LABEL_TEXTS[0]).getText(),
+                    mainPanel.labelFieldMap.get(LABEL_TEXTS[2]).getText(), mainPanel.labelFieldMap.get(LABEL_TEXTS[3]).getText(), mainPanel.labelFieldMap.get(LABEL_TEXTS[4]).getText());
+        }
+        return null;
+    }
+
 }

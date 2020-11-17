@@ -1,13 +1,9 @@
 package JoshKb.FootballManager.UI;
 
-import JoshKb.FootballManager.Individuals.Player;
-import JoshKb.FootballManager.Individuals.Role;
-import JoshKb.FootballManager.Individuals.Team;
+import JoshKb.FootballManager.Individuals.*;
 import JoshKb.FootballManager.UI.prefabs.PlayerInfoDialogPanel;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.ArrayList;
 
@@ -22,7 +18,6 @@ public class TeamInformation {
     private JButton addPersonButton;
     private JButton deletePersonButton;
     private ArrayList<Team> Teams;
-    private ArrayList<Player> Players;
     private JPanel TIPanel;
 
     public TeamInformation() {
@@ -36,7 +31,6 @@ public class TeamInformation {
         }
         addTeamButton.addActionListener(e -> {
             teamComboBox.addItem(new Team(JOptionPane.showInputDialog("Enter team name")));
-            //Teams.add(teamComboBox.getItemAt(teamComboBox.getItemCount()));
             WriteToFile(getTeamBoxItems(teamComboBox));
             Teams = ReadFromFile(f);
         });
@@ -58,6 +52,20 @@ public class TeamInformation {
                     personBox.addItem(Teams.get(teamComboBox.getSelectedIndex()).getPlayer(i));
                 }
             }
+            else if(Teams != null && (roleBox.getItemAt(roleBox.getSelectedIndex()).getName().equals("Staff"))){
+                System.out.println(Teams.get(teamComboBox.getSelectedIndex()).staff.size());
+                for (int i = 0; i < Teams.get(teamComboBox.getSelectedIndex()).staff.size(); i++)
+                {
+                    personBox.addItem(Teams.get(teamComboBox.getSelectedIndex()).getStaff(i));
+                }
+            }
+            else{
+                System.out.println(Teams.get(teamComboBox.getSelectedIndex()).referees.size());
+                for (int i = 0; i < Teams.get(teamComboBox.getSelectedIndex()).referees.size(); i++)
+                {
+                    personBox.addItem(Teams.get(teamComboBox.getSelectedIndex()).getReferees(i));
+                }
+            }
         });
         roleBox.addActionListener(e -> {
             personBox.removeAllItems();
@@ -65,6 +73,20 @@ public class TeamInformation {
                 for (int i = 0; i < Teams.get(teamComboBox.getSelectedIndex()).players.size(); i++)
                 {
                     personBox.addItem(Teams.get(teamComboBox.getSelectedIndex()).getPlayer(i));
+                }
+            }
+            else if(Teams != null && (roleBox.getItemAt(roleBox.getSelectedIndex()).getName().equals("Staff"))){
+                System.out.println(Teams.get(teamComboBox.getSelectedIndex()).staff.size());
+                for (int i = 0; i < Teams.get(teamComboBox.getSelectedIndex()).staff.size(); i++)
+                {
+                    personBox.addItem(Teams.get(teamComboBox.getSelectedIndex()).getStaff(i));
+                }
+            }
+            else{
+                System.out.println(Teams.get(teamComboBox.getSelectedIndex()).referees.size());
+                for (int i = 0; i < Teams.get(teamComboBox.getSelectedIndex()).referees.size(); i++)
+                {
+                    personBox.addItem(Teams.get(teamComboBox.getSelectedIndex()).getReferees(i));
                 }
             }
         });
@@ -127,10 +149,10 @@ public class TeamInformation {
                 addPlayer();
                 break;
             case "Staff":
-                System.out.println("1");
+                addStaff();
                 break;
             default:
-                System.out.println("3");
+                addReferee();
                 break;
         }
     }
@@ -140,6 +162,20 @@ public class TeamInformation {
         Team t = teamComboBox.getItemAt(teamComboBox.getSelectedIndex());
         t.setPlayers(p);
         personBox.addItem(p.Name);
+    }
+
+    public void addStaff(){
+        Staff s = PlayerInfoDialogPanel.createAndShowGuiStaff();
+        Team t = teamComboBox.getItemAt(teamComboBox.getSelectedIndex());
+        t.setStaff(s);
+        personBox.addItem(s.Name);
+    }
+
+    public void addReferee(){
+        Referees r = PlayerInfoDialogPanel.createAndShowGuiReferee();
+        Team t = teamComboBox.getItemAt(teamComboBox.getSelectedIndex());
+        t.setReferees(r);
+        personBox.addItem(r.Name);
     }
 
     public void search() {

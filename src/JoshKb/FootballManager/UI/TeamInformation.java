@@ -36,10 +36,18 @@ public class TeamInformation {
             teamComboBox.addItem(new Team(JOptionPane.showInputDialog("Enter team name")));
             WriteToFile(getTeamBoxItems(teamComboBox));
             Teams = ReadFromFile(f);
+            enableButtons();
         });
         deleteTeamButton.addActionListener(e -> {
+            if(teamComboBox.getItemCount() == 0){
+                return;
+            }
+            Team t = (Team) teamComboBox.getSelectedItem();
             teamComboBox.removeItemAt(teamComboBox.getSelectedIndex());
             WriteToFile(getTeamBoxItems(teamComboBox));
+            Teams.remove(t);
+            teamComboBox.setSelectedItem(null);
+            enableButtons();
         });
         addPersonButton.addActionListener(e -> {
             addPerson();
@@ -48,30 +56,50 @@ public class TeamInformation {
         searchButton.addActionListener(e -> search());
         teamComboBox.addActionListener(e -> {
 
-            //Changing the contents of the person box depending on which team and role is selected
 
             personBox.removeAllItems();
-            if (Teams != null && (roleBox.getItemAt(roleBox.getSelectedIndex()).getName().equals("Player"))){
-                System.out.println(Teams.get(teamComboBox.getSelectedIndex()).players.size());
-                for (int i = 0; i < Teams.get(teamComboBox.getSelectedIndex()).players.size(); i++)
-                {
-                    personBox.addItem(Teams.get(teamComboBox.getSelectedIndex()).getPlayer(i));
+            if(Teams == null || Teams.size() == 0 || teamComboBox.getItemCount() == 0){
+                return;
+            }
+            if (!(teamComboBox.getSelectedItem() == null)) {
+                switch (roleBox.getItemAt(roleBox.getSelectedIndex()).getName()) {
+                    case "Player":
+                        for (int i = 0; i < Teams.get(teamComboBox.getSelectedIndex()).players.size(); i++) {
+                            personBox.addItem(Teams.get(teamComboBox.getSelectedIndex()).getPlayer(i));
+                        }
+                        break;
+                    case "Staff":
+                        for (int i = 0; i < Teams.get(teamComboBox.getSelectedIndex()).staff.size(); i++) {
+                            personBox.addItem(Teams.get(teamComboBox.getSelectedIndex()).getStaff(i));
+                        }
+                        break;
+                    case "Referee":
+                        for (int i = 0; i < Teams.get(teamComboBox.getSelectedIndex()).referees.size(); i++) {
+                            personBox.addItem(Teams.get(teamComboBox.getSelectedIndex()).getReferees(i));
+                        }
+                        break;
                 }
             }
-            else if(Teams != null && (roleBox.getItemAt(roleBox.getSelectedIndex()).getName().equals("Staff"))){
-                System.out.println(Teams.get(teamComboBox.getSelectedIndex()).staff.size());
-                for (int i = 0; i < Teams.get(teamComboBox.getSelectedIndex()).staff.size(); i++)
-                {
-                    personBox.addItem(Teams.get(teamComboBox.getSelectedIndex()).getStaff(i));
-                }
-            }
-            else{
-                System.out.println(Teams.get(teamComboBox.getSelectedIndex()).referees.size());
-                for (int i = 0; i < Teams.get(teamComboBox.getSelectedIndex()).referees.size(); i++)
-                {
-                    personBox.addItem(Teams.get(teamComboBox.getSelectedIndex()).getReferees(i));
-                }
-            }
+
+//           if (Teams != null && teamComboBox.getItemCount() > 0 && Teams.size() > 0 && Teams.get(teamComboBox.getSelectedIndex()).players.size() > 0){
+//                if (Teams != null && (roleBox.getItemAt(roleBox.getSelectedIndex()).getName().equals("Player"))){
+
+//                }
+//                else if(Teams != null && (roleBox.getItemAt(roleBox.getSelectedIndex()).getName().equals("Staff"))){
+//                    for (int i = 0; i < Teams.get(teamComboBox.getSelectedIndex()).staff.size(); i++)
+//                    {
+//                        personBox.addItem(Teams.get(teamComboBox.getSelectedIndex()).getStaff(i));
+//                    }
+//                }
+//                else{
+//                    if(Teams != null) {
+//                        for (int i = 0; i < Teams.get(teamComboBox.getSelectedIndex()).referees.size(); i++) {
+//                            personBox.addItem(Teams.get(teamComboBox.getSelectedIndex()).getReferees(i));
+//                        }
+//                    }
+//                }
+//            }
+
         });
         roleBox.addActionListener(e -> {
 
@@ -85,17 +113,16 @@ public class TeamInformation {
                 }
             }
             else if(Teams != null && (roleBox.getItemAt(roleBox.getSelectedIndex()).getName().equals("Staff"))){
-                System.out.println(Teams.get(teamComboBox.getSelectedIndex()).staff.size());
                 for (int i = 0; i < Teams.get(teamComboBox.getSelectedIndex()).staff.size(); i++)
                 {
                     personBox.addItem(Teams.get(teamComboBox.getSelectedIndex()).getStaff(i));
                 }
             }
             else{
-                System.out.println(Teams.get(teamComboBox.getSelectedIndex()).referees.size());
-                for (int i = 0; i < Teams.get(teamComboBox.getSelectedIndex()).referees.size(); i++)
-                {
-                    personBox.addItem(Teams.get(teamComboBox.getSelectedIndex()).getReferees(i));
+                if(Teams != null) {
+                    for (int i = 0; i < Teams.get(teamComboBox.getSelectedIndex()).referees.size(); i++) {
+                        personBox.addItem(Teams.get(teamComboBox.getSelectedIndex()).getReferees(i));
+                    }
                 }
             }
         });
@@ -107,7 +134,21 @@ public class TeamInformation {
         roleBox.addItem(player);
         roleBox.addItem(staff);
         roleBox.addItem(referee);
+        enableButtons();
 
+
+    }
+
+    public void enableButtons(){
+        boolean enable = false;
+        if(Teams != null && Teams.size() > 0){
+            enable = true;
+        }
+        personBox.setEnabled(enable);
+        roleBox.setEnabled(enable);
+        addPersonButton.setEnabled(enable);
+        deletePersonButton.setEnabled(enable);
+        searchButton.setEnabled(enable);
     }
 
     //write to file method

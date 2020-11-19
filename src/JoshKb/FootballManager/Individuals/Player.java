@@ -1,7 +1,10 @@
 package JoshKb.FootballManager.Individuals;
 
-public class Player extends Individual{
+import java.io.Serializable;
 
+public class Player extends Individual implements Serializable {
+
+    private static final long serialVersionUID = 1234567L;
     public int GoalsScored;
 
     public Player(String name, String position, String employmentStatus, String pay){

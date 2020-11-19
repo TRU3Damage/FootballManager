@@ -1,6 +1,10 @@
 package JoshKb.FootballManager.Individuals;
 
-public class Staff extends Individual{
+import java.io.Serializable;
+
+public class Staff extends Individual implements Serializable {
+
+    private static final long serialVersionUID = 1234567L;
 
     public Staff(String name, String position, String employmentStatus, String pay){
         this.Name = name;

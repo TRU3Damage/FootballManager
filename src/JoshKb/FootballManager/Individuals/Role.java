@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 public class Role implements Serializable {
 
+    private static final long serialVersionUID = 1234567L;
+
     ArrayList<Individual> Individuals = new ArrayList<>();
 
     private String Name;

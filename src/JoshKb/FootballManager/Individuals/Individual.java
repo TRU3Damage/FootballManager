@@ -1,6 +1,10 @@
 package JoshKb.FootballManager.Individuals;
 
-public abstract class Individual {
+import java.io.Serializable;
+
+public abstract class Individual implements Serializable {
+
+    private static final long serialVersionUID = 1234567L;
 
     public String Name;
 

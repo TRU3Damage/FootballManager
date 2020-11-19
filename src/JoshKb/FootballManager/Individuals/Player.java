@@ -30,4 +30,14 @@ public class Player extends Individual implements Serializable {
     public String getPay(){
         return Pay;
     }
+
+    @Override
+    public String toString() {
+        return getName();
+    }
+
+    @Override
+    public boolean isPlayer() {
+        return true;
+    }
 }

@@ -71,7 +71,6 @@ public class PlayerInfoDialogPanel extends JPanel {
                 "Get User Information", optionType, messageType, null, options,
                 initialValue);
         if (reply == 0) {
-            // When submit clicked:
 
             return new Player(mainPanel.labelFieldMap.get(LABEL_TEXTS[1]).getText() + mainPanel.labelFieldMap.get(LABEL_TEXTS[0]).getText(),
                     mainPanel.labelFieldMap.get(LABEL_TEXTS[2]).getText(), mainPanel.labelFieldMap.get(LABEL_TEXTS[3]).getText(), mainPanel.labelFieldMap.get(LABEL_TEXTS[4]).getText());

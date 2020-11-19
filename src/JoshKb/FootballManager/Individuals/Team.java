@@ -21,6 +21,10 @@ public class Team implements Serializable {
         return players.get(i).getName();
     }
 
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
     public void setPlayers(Player Players) {
         players.add(Players);
     }
@@ -43,6 +47,18 @@ public class Team implements Serializable {
 
     public String getName() {
         return Name;
+    }
+
+    public ArrayList<Referees> getReferees() {
+        return referees;
+    }
+
+    public ArrayList<Staff> getStaff() {
+        return staff;
+    }
+
+    public void deletePlayer(Player p){
+        players.remove(p);
     }
 
     @Override

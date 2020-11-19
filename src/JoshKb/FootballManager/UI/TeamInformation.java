@@ -52,7 +52,17 @@ public class TeamInformation {
         addPersonButton.addActionListener(e -> {
             addPerson();
         });
-        deletePersonButton.addActionListener(e -> personBox.removeItemAt(personBox.getSelectedIndex()));
+        deletePersonButton.addActionListener(e ->{
+            Team t = (Team) teamComboBox.getSelectedItem();
+            t.deletePlayer(personBox.getSelectedIndex());
+            personBox.removeItemAt(personBox.getSelectedIndex());
+            IIndividual i = (IIndividual) personBox.getSelectedItem();
+            assert i != null;
+            i.isPlayer();
+            if (i.isPlayer()){
+                System.out.println("aaaaa");
+            }
+        });
         searchButton.addActionListener(e -> search());
         teamComboBox.addActionListener(e -> {
 
@@ -62,20 +72,21 @@ public class TeamInformation {
                 return;
             }
             if (!(teamComboBox.getSelectedItem() == null)) {
+                Team t = (Team) teamComboBox.getSelectedItem();
                 switch (roleBox.getItemAt(roleBox.getSelectedIndex()).getName()) {
                     case "Player":
-                        for (int i = 0; i < Teams.get(teamComboBox.getSelectedIndex()).players.size(); i++) {
-                            personBox.addItem(Teams.get(teamComboBox.getSelectedIndex()).getPlayer(i));
+                        for (Player p:t.getPlayers()) {
+                            personBox.addItem(p.getName());
                         }
                         break;
                     case "Staff":
-                        for (int i = 0; i < Teams.get(teamComboBox.getSelectedIndex()).staff.size(); i++) {
-                            personBox.addItem(Teams.get(teamComboBox.getSelectedIndex()).getStaff(i));
+                        for (Staff s:t.getStaff()) {
+                            personBox.addItem(s.getName());
                         }
                         break;
                     case "Referee":
-                        for (int i = 0; i < Teams.get(teamComboBox.getSelectedIndex()).referees.size(); i++) {
-                            personBox.addItem(Teams.get(teamComboBox.getSelectedIndex()).getReferees(i));
+                        for (Referees r:t.getReferees()) {
+                            personBox.addItem(r.getName());
                         }
                         break;
                 }
@@ -237,18 +248,25 @@ public class TeamInformation {
     }
 
     public void search() {
-        //getting the player information based on which player is currently selected in the personBox
-        String pName = personBox.getItemAt(personBox.getSelectedIndex());
-        ArrayList<Player> players = Teams.get(teamComboBox.getSelectedIndex()).players;
-        String pPosition, pEmploymentStatus, pPay;
-        for (Player player :
-                players) {
-            if (player.Name == pName){
-                pPosition = player.Position;
-                pPay = player.Pay;
-                pEmploymentStatus = player.EmploymentStatus;
-                InfoBox IBWindow = new InfoBox(pName, pPay, pPosition, pEmploymentStatus);
-                IBWindow.run();
+        if(teamComboBox.getItemCount() > 0) {
+            Team t = (Team) teamComboBox.getSelectedItem();
+            assert t != null;
+            ArrayList<Player>players = t.getPlayers();
+            //getting the player information based on which player is currently selected in the personBox
+            String pName = personBox.getItemAt(personBox.getSelectedIndex());
+            System.out.println(players);
+            String pPosition, pEmploymentStatus, pPay;
+            for (Player player :
+                    players) {
+                System.out.println("test");
+                if (player.Name.equals(pName)) {
+                    pPosition = player.Position;
+                    pPay = player.Pay;
+                    pEmploymentStatus = player.EmploymentStatus;
+                    System.out.println("fds");
+                    InfoBox IBWindow = new InfoBox(pName, pPay, pPosition, pEmploymentStatus);
+                    IBWindow.run();
+                }
             }
         }
     }

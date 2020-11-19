@@ -18,4 +18,8 @@ public class Referees extends Individual implements Serializable {
     }
 
 
+    @Override
+    public boolean isPlayer() {
+        return false;
+    }
 }

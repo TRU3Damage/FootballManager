@@ -43,10 +43,10 @@ public class TeamInformation {
                 return;
             }
             Team t = (Team) teamComboBox.getSelectedItem();
-            teamComboBox.removeItemAt(teamComboBox.getSelectedIndex());
-            WriteToFile(getTeamBoxItems(teamComboBox));
             Teams.remove(t);
+            teamComboBox.removeItemAt(teamComboBox.getSelectedIndex());
             teamComboBox.setSelectedItem(null);
+            WriteToFile(getTeamBoxItems(teamComboBox));
             enableButtons();
         });
         addPersonButton.addActionListener(e -> {
@@ -54,14 +54,29 @@ public class TeamInformation {
         });
         deletePersonButton.addActionListener(e ->{
             Team t = (Team) teamComboBox.getSelectedItem();
-            t.deletePlayer(personBox.getSelectedIndex());
-            personBox.removeItemAt(personBox.getSelectedIndex());
-            IIndividual i = (IIndividual) personBox.getSelectedItem();
-            assert i != null;
-            i.isPlayer();
-            if (i.isPlayer()){
-                System.out.println("aaaaa");
+            if (roleBox.getItemAt(roleBox.getSelectedIndex()).getName().equals("Player")) {
+                if (t.players != null && personBox.getItemCount() > 0){
+                    t.deletePlayer(personBox.getSelectedIndex());
+                    personBox.removeItemAt(personBox.getSelectedIndex());
+                    personBox.setSelectedItem(null);
+                }
             }
+            else if (roleBox.getItemAt(roleBox.getSelectedIndex()).getName().equals("Staff")) {
+                if (t.staff != null && personBox.getItemCount() > 0){
+                    t.deleteStaff(personBox.getSelectedIndex());
+                    personBox.removeItemAt(personBox.getSelectedIndex());
+                    personBox.setSelectedItem(null);
+                }
+            }
+            else if((roleBox.getItemAt(roleBox.getSelectedIndex()).getName().equals("Referees"))){
+                if (t.referees != null && personBox.getItemCount() > 0){
+                    t.deleteReferee(personBox.getSelectedIndex());
+                    personBox.removeItemAt(personBox.getSelectedIndex());
+                    personBox.setSelectedItem(null);
+                }
+            }
+
+
         });
         searchButton.addActionListener(e -> search());
         teamComboBox.addActionListener(e -> {
@@ -152,7 +167,12 @@ public class TeamInformation {
 
     public void enableButtons(){
         boolean enable = false;
-        if(Teams != null && Teams.size() > 0){
+        if(Teams != null && teamComboBox.getItemCount() > 0){
+            System.out.println(Teams.size());
+            for (Team t:
+                 Teams) {
+                System.out.println(t);
+            }
             enable = true;
         }
         personBox.setEnabled(enable);
@@ -249,23 +269,24 @@ public class TeamInformation {
 
     public void search() {
         if(teamComboBox.getItemCount() > 0) {
-            Team t = (Team) teamComboBox.getSelectedItem();
-            assert t != null;
-            ArrayList<Player>players = t.getPlayers();
-            //getting the player information based on which player is currently selected in the personBox
-            String pName = personBox.getItemAt(personBox.getSelectedIndex());
-            System.out.println(players);
-            String pPosition, pEmploymentStatus, pPay;
-            for (Player player :
-                    players) {
-                System.out.println("test");
-                if (player.Name.equals(pName)) {
-                    pPosition = player.Position;
-                    pPay = player.Pay;
-                    pEmploymentStatus = player.EmploymentStatus;
-                    System.out.println("fds");
-                    InfoBox IBWindow = new InfoBox(pName, pPay, pPosition, pEmploymentStatus);
-                    IBWindow.run();
+            Team t = (Team) teamComboBox.getSelectedItem(); // needs to not be null
+            if(t != null) {
+                ArrayList<Player> players = t.getPlayers();
+                //getting the player information based on which player is currently selected in the personBox
+                String pName = personBox.getItemAt(personBox.getSelectedIndex());
+                System.out.println(players);
+                String pPosition, pEmploymentStatus, pPay;
+                for (Player player :
+                        players) {
+                    System.out.println("test");
+                    if (player.Name.equals(pName)) {
+                        pPosition = player.Position;
+                        pPay = player.Pay;
+                        pEmploymentStatus = player.EmploymentStatus;
+                        System.out.println("fds");
+                        InfoBox IBWindow = new InfoBox(pName, pPay, pPosition, pEmploymentStatus);
+                        IBWindow.run();
+                    }
                 }
             }
         }

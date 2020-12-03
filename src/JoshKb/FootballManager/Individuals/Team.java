@@ -57,8 +57,12 @@ public class Team implements Serializable {
         return staff;
     }
 
-    public void deletePlayer(Player p){
+    public void deletePlayer(int p){
         players.remove(p);
+    }
+    public void deleteStaff(int s){ staff.remove(s); }
+    public void deleteReferee(int r){
+        referees.remove(r);
     }
 
     @Override

@@ -107,25 +107,6 @@ public class TeamInformation {
                 }
             }
 
-//           if (Teams != null && teamComboBox.getItemCount() > 0 && Teams.size() > 0 && Teams.get(teamComboBox.getSelectedIndex()).players.size() > 0){
-//                if (Teams != null && (roleBox.getItemAt(roleBox.getSelectedIndex()).getName().equals("Player"))){
-
-//                }
-//                else if(Teams != null && (roleBox.getItemAt(roleBox.getSelectedIndex()).getName().equals("Staff"))){
-//                    for (int i = 0; i < Teams.get(teamComboBox.getSelectedIndex()).staff.size(); i++)
-//                    {
-//                        personBox.addItem(Teams.get(teamComboBox.getSelectedIndex()).getStaff(i));
-//                    }
-//                }
-//                else{
-//                    if(Teams != null) {
-//                        for (int i = 0; i < Teams.get(teamComboBox.getSelectedIndex()).referees.size(); i++) {
-//                            personBox.addItem(Teams.get(teamComboBox.getSelectedIndex()).getReferees(i));
-//                        }
-//                    }
-//                }
-//            }
-
         });
         roleBox.addActionListener(e -> {
 
@@ -156,26 +137,6 @@ public class TeamInformation {
                 }
             }
 
-//            personBox.removeAllItems();
-//            if (Teams != null && (roleBox.getItemAt(roleBox.getSelectedIndex()).getName().equals("Player"))){
-//                for (int i = 0; i < Teams.get(teamComboBox.getSelectedIndex()).players.size(); i++)
-//                {
-//                    personBox.addItem(Teams.get(teamComboBox.getSelectedIndex()).getPlayer(i));
-//                }
-//            }
-//            else if(Teams != null && (roleBox.getItemAt(roleBox.getSelectedIndex()).getName().equals("Staff"))){
-//                for (int i = 0; i < Teams.get(teamComboBox.getSelectedIndex()).staff.size(); i++)
-//                {
-//                    personBox.addItem(Teams.get(teamComboBox.getSelectedIndex()).getStaff(i));
-//                }
-//            }
-//            else{
-//                if(Teams != null) {
-//                    for (int i = 0; i < Teams.get(teamComboBox.getSelectedIndex()).referees.size(); i++) {
-//                        personBox.addItem(Teams.get(teamComboBox.getSelectedIndex()).getReferees(i));
-//                    }
-//                }
-//            }
         });
 
         //making of the 3 roles as other roles don't need to be added

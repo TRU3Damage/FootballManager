@@ -39,7 +39,7 @@ public class TeamInformation {
             enableButtons();
         });
         deleteTeamButton.addActionListener(e -> {
-            if(teamComboBox.getItemCount() == 0){
+            if(teamComboBox.getItemCount() == 0 || teamComboBox.getSelectedItem() == null){
                 return;
             }
             Team t = (Team) teamComboBox.getSelectedItem();
@@ -132,25 +132,50 @@ public class TeamInformation {
             //Changing the contents of the person box depending on which team and role is selected
 
             personBox.removeAllItems();
-            if (Teams != null && (roleBox.getItemAt(roleBox.getSelectedIndex()).getName().equals("Player"))){
-                for (int i = 0; i < Teams.get(teamComboBox.getSelectedIndex()).players.size(); i++)
-                {
-                    personBox.addItem(Teams.get(teamComboBox.getSelectedIndex()).getPlayer(i));
+            if(Teams == null || Teams.size() == 0 || teamComboBox.getItemCount() == 0){
+                return;
+            }
+            if (!(teamComboBox.getSelectedItem() == null)) {
+                Team t = (Team) teamComboBox.getSelectedItem();
+                switch (roleBox.getItemAt(roleBox.getSelectedIndex()).getName()) {
+                    case "Player":
+                        for (Player p:t.getPlayers()) {
+                            personBox.addItem(p.getName());
+                        }
+                        break;
+                    case "Staff":
+                        for (Staff s:t.getStaff()) {
+                            personBox.addItem(s.getName());
+                        }
+                        break;
+                    case "Referee":
+                        for (Referees r:t.getReferees()) {
+                            personBox.addItem(r.getName());
+                        }
+                        break;
                 }
             }
-            else if(Teams != null && (roleBox.getItemAt(roleBox.getSelectedIndex()).getName().equals("Staff"))){
-                for (int i = 0; i < Teams.get(teamComboBox.getSelectedIndex()).staff.size(); i++)
-                {
-                    personBox.addItem(Teams.get(teamComboBox.getSelectedIndex()).getStaff(i));
-                }
-            }
-            else{
-                if(Teams != null) {
-                    for (int i = 0; i < Teams.get(teamComboBox.getSelectedIndex()).referees.size(); i++) {
-                        personBox.addItem(Teams.get(teamComboBox.getSelectedIndex()).getReferees(i));
-                    }
-                }
-            }
+
+//            personBox.removeAllItems();
+//            if (Teams != null && (roleBox.getItemAt(roleBox.getSelectedIndex()).getName().equals("Player"))){
+//                for (int i = 0; i < Teams.get(teamComboBox.getSelectedIndex()).players.size(); i++)
+//                {
+//                    personBox.addItem(Teams.get(teamComboBox.getSelectedIndex()).getPlayer(i));
+//                }
+//            }
+//            else if(Teams != null && (roleBox.getItemAt(roleBox.getSelectedIndex()).getName().equals("Staff"))){
+//                for (int i = 0; i < Teams.get(teamComboBox.getSelectedIndex()).staff.size(); i++)
+//                {
+//                    personBox.addItem(Teams.get(teamComboBox.getSelectedIndex()).getStaff(i));
+//                }
+//            }
+//            else{
+//                if(Teams != null) {
+//                    for (int i = 0; i < Teams.get(teamComboBox.getSelectedIndex()).referees.size(); i++) {
+//                        personBox.addItem(Teams.get(teamComboBox.getSelectedIndex()).getReferees(i));
+//                    }
+//                }
+//            }
         });
 
         //making of the 3 roles as other roles don't need to be added
@@ -195,7 +220,6 @@ public class TeamInformation {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public static ArrayList<Team> ReadFromFile(File FileLocation) {
         ArrayList<Team> T1 = null;
         try {
@@ -271,23 +295,26 @@ public class TeamInformation {
         if(teamComboBox.getItemCount() > 0) {
             Team t = (Team) teamComboBox.getSelectedItem(); // needs to not be null
             if(t != null) {
-                ArrayList<Player> players = t.getPlayers();
-                //getting the player information based on which player is currently selected in the personBox
-                String pName = personBox.getItemAt(personBox.getSelectedIndex());
-                System.out.println(players);
-                String pPosition, pEmploymentStatus, pPay;
-                for (Player player :
-                        players) {
-                    System.out.println("test");
-                    if (player.Name.equals(pName)) {
-                        pPosition = player.Position;
-                        pPay = player.Pay;
-                        pEmploymentStatus = player.EmploymentStatus;
-                        System.out.println("fds");
-                        InfoBox IBWindow = new InfoBox(pName, pPay, pPosition, pEmploymentStatus);
-                        IBWindow.run();
+                if (roleBox.getItemAt(roleBox.getSelectedIndex()).getName().equals("Player")) {
+                    ArrayList<Player> players = t.getPlayers();
+                    //getting the player information based on which player is currently selected in the personBox
+                    String pName = personBox.getItemAt(personBox.getSelectedIndex());
+                    System.out.println(players);
+                    String pPosition, pEmploymentStatus, pPay;
+                    for (Player player :
+                            players) {
+                        System.out.println("test");
+                        if (player.Name.equals(pName)) {
+                            pPosition = player.Position;
+                            pPay = player.Pay;
+                            pEmploymentStatus = player.EmploymentStatus;
+                            System.out.println("fds");
+                            InfoBox IBWindow = new InfoBox(pName, pPay, pPosition, pEmploymentStatus);
+                            IBWindow.run();
+                        }
                     }
                 }
+
             }
         }
     }

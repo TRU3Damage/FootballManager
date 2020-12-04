@@ -33,7 +33,7 @@ public class PlayerInfoDialogPanel extends JPanel {
     }
 
     /**
-     * Used to make our own grid to keep elements in place
+     * Used to make my own grid to keep elements in place
      * @see "https://docs.oracle.com/javase/tutorial/uiswing/layout/gridbag.html"
      * @param x Column
      * @param y Row
